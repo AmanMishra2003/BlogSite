@@ -1,7 +1,7 @@
 const mongoose  = require('mongoose')
 const Schema = mongoose.Schema
 
-const ReviewSchema = Schema({
+const commentSchema = Schema({
     // author: {
     //     type: Schema.Types.ObjectId,
     //     ref: 'Author',
@@ -17,8 +17,8 @@ const ReviewSchema = Schema({
       },
       replies: [{
         type: Schema.Types.ObjectId,
-        ref: 'review'
+        ref: 'Comment'
       }]
 })
 
-module.exports = mongoose.model('review', ReviewSchema)
+module.exports = mongoose.model('Comment', commentSchema)

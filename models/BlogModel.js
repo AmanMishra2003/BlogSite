@@ -11,7 +11,7 @@ const BlogSchema = Schema({
     title :{
         type: String
     },
-    Date : {
+    blogDate : {
         type : Date
     },
     content : {
@@ -22,7 +22,7 @@ const BlogSchema = Schema({
     },
     comments :[{
         type: Schema.Types.ObjectId,
-        ref:'Review'
+        ref:'Comment'
     }]
     // author 
 })

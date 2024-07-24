@@ -1,1 +1,38 @@
 <%- layout('./layout/boilerplate.ejs') %>
+
+<main class="container">
+
+    <div class="row">
+        <% allblogs.forEach(ele => { %>
+            <div class="col-12 col-md-4 gx-5 gy-3">
+                <div class="card w-100 position-relative" >
+                    <span class="badge bg-light position-absolute px-3 py-2 fs-4 text-dark" style="top: 2%; left: 4%;"><%=ele.category%></span>
+                    <img src=<%= ele.image%> class="card-img-top blog-image-dimension" alt="...">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-cente my-3">
+                            <h5 class="card-title"><%= ele.title%></h5>
+                            <p class="card-subTitle mute small" style="min-width: fit-content;"><%= formateDate(ele.blogDate)%></p>
+                        </div>
+                      
+                      
+                      <p class="card-text text-justify "><div id="blog-<%= ele.id %>" class="blog-synopsis"></div></p>
+                      <a href="/blog/<%=ele.id%>" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+        
+    </div>
+
+</main>
+
+<script>
+    const allblogs = <%- JSON.stringify(allblogs)%>
+    // console.log(allblogs)
+    allblogs.forEach(ele=>{
+        const blogDiv = document.querySelector(`#blog-${ele._id}`)
+        if (blogDiv){
+            blogDiv.innerHTML = ele.content
+        }
+    })
+</script>

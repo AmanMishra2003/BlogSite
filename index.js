@@ -1,4 +1,6 @@
 const ejsMate = require('ejs-mate')
+const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 const path = require('path')
 
 const express = require('express')
@@ -8,17 +10,24 @@ const app = express();
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(methodOverride('_method'))
+app.use(express.urlencoded({extended:true}))
+
+//mongodb connection 
+const DB_url = "mongodb://localhost:27017/blogSiteCodeSoft"
+mongoose.connect(DB_url).then(()=>{
+    console.log("Connection Made!!")
+})
 
 //routers
 const BlogRouter = require('./routes/blogRouter')
-const ReviewRouter = require('./routes/reviewRouter')
+const CommentRouter = require('./routes/commentRouter')
 const UserRouter = require("./routes/userRouter")
-
 
 
 //all routes written here
 app.use('/blog',BlogRouter)
-app.use('/blog/:id/review',ReviewRouter)
+app.use('/blog/:id/comment',CommentRouter)
 app.use('/users',UserRouter)
 
 app.listen(3000,()=>{

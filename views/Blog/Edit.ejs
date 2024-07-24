@@ -1,0 +1,37 @@
+<%- layout('./layout/boilerplate.ejs') %>
+<main class="container mt-5 w-50 border border-primary rounded px-4 py-4">
+    <h1 class="mb-4">Create a Blog Post</h1>
+    <form action="/blog/<%=data.id%>?_method=PATCH" method="post">
+        <div class="mb-3">
+            <label for="image" class="form-label">Image URL</label>
+            <input type="text" class="form-control" id="image" name="image" placeholder="Enter image URL" value="<%= data.image %>">
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" aria-label="Default select example" id="category" name="category">
+                <option>Open this select menu</option>
+                <option value="story" <%= data.category === 'story' ? 'selected' : '' %>>Story</option>
+                <option value="technology" <%= data.category === 'technology' ? 'selected' : '' %>>Technology</option>
+                <option value="health" <%= data.category === 'health' ? 'selected' : '' %>>Health and Wellness</option>
+                <option value="lifestyle" <%= data.category === 'lifestyle' ? 'selected' : '' %>>Lifestyle</option>
+                <option value="business" <%= data.category === 'business' ? 'selected' : '' %>>Business and Finance</option>
+                <option value="education" <%= data.category === 'education' ? 'selected' : '' %>>Education</option>
+                <option value="entertainment" <%= data.category === 'entertainment' ? 'selected' : '' %>>Entertainment</option>
+                <option value="food" <%= data.category === 'food' ? 'selected' : '' %>>Food and Drink</option>
+                <option value="travel" <%= data.category === 'travel' ? 'selected' : '' %>>Travel</option>
+                <option value="parenting" <%= data.category === 'parenting' ? 'selected' : '' %>>Parenting</option>
+                <option value="diy" <%= data.category === 'diy' ? 'selected' : '' %>>DIY and Crafts</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="<%= data.title %>">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Content </label>
+            <textarea class="form-control" id="content" name="content" rows="4" placeholder="Enter content"><%= data.content %></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+</main>
