@@ -1,54 +1,42 @@
 <%- layout('./layout/boilerplate.ejs') %>
 
-
-    <main class="container-fluid">
-                <div class="row w-100">
-                    <% allblogs.forEach(ele=> { %>
-                        <div class="col-12 col-md-6 col-lg-4 gx-5 gy-3">
-                            <div class="card w-100 position-relative">
-                                <span class="badge bg-light position-absolute px-3 py-2 fs-5 text-dark text-capitalize"
-                                    style="top: 2%; left: 4%;">
-                                    <%=ele.category%>
-                                </span>
-                                <% if (ele.image) { %>
-                                    <img src=<%=ele.image.path%> class="card-img-top blog-image-dimension" alt="...">
-                                    <% } %>
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-cente my-3">
-                                                <h5 class="card-title text-capitalize">
-                                                    <%= ele.title%>
-                                                </h5>
-                                                <p class="card-subTitle mute small" style="min-width: fit-content;">
-                                                    <%= formateDate(ele.blogDate)%>
-                                                </p>
-                                            </div>
-
-                                            <p class="card-text text-justify ">
-                                            <div id="blog-<%= ele.id %>" class="blog-synopsis"></div>
-                                            </p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <a href="/blog/<%=ele.id%>" class="btn btn-primary">Read More</a>
-                                                <p class=" text-secondary my-0">Views: <%= ele.views %>
-                                                </p>
-                                            </div>
-                                        </div>
-                            </div>
+<main class="container-md">
+    <div>
+    <div class="row">
+        <% allblogs.forEach(ele => { %>
+            <div class="col-12 col-md-6 col-lg-4 gx-5 gy-3">
+                <div class="card w-100 position-relative" >
+                    <span class="badge bg-light position-absolute px-3 py-2 fs-5 text-dark text-capitalize" style="top: 2%; left: 4%;"><%=ele.category%></span>
+                    <% if (ele.image) { %>
+                        <img src=<%= ele.image.path%> class="card-img-top blog-image-dimension" alt="...">
+                    <% } %>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-cente my-3">
+                            <h5 class="card-title text-capitalize"><%= ele.title%></h5>
+                            <p class="card-subTitle mute small" style="min-width: fit-content;"><%= formateDate(ele.blogDate)%></p>
                         </div>
-                        <% }) %>
-
+                      
+                      <p class="card-text text-justify "><div id="blog-<%= ele.id %>" class="blog-synopsis"></div></p>
+                      <div class="d-flex align-items-center justify-content-between">
+                          <a href="/blog/<%=ele.id%>" class="btn btn-primary">Read More</a>
+                          <p class=" text-secondary my-0">Views: <%= ele.views %></p>
+                      </div>
+                    </div>
                 </div>
+            </div>
+        <% }) %>
+        
+    </div>
+</div>
 
+</main>
 
-          
-    
-    </main>
-
-    <script>
-        const allblogs = <% - JSON.stringify(allblogs) %>
-            allblogs.forEach(ele => {
-                const blogDiv = document.querySelector(`#blog-${ele._id}`)
-                if (blogDiv) {
-                    blogDiv.innerHTML = ele.content
-                }
-            })
-    </script>
+<script>
+    const allblogs = <%- JSON.stringify(allblogs)%>
+    allblogs.forEach(ele=>{
+        const blogDiv = document.querySelector(`#blog-${ele._id}`)
+        if (blogDiv){
+            blogDiv.innerHTML = ele.content
+        }
+    })
+</script>
