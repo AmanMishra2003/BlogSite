@@ -49,4 +49,24 @@ html{
 
 #blog{
     min-width: 300px;
+    line-height: 2;
+}
+#blog::first-letter{
+    float: left;
+    font-size: 3em; 
+    line-height: 1;
+    margin-bottom: -0.5em;
+    position: relative;
+    top: 0.2em; 
+    color: #3B82F6;
+}
+
+.title{
+    font-size: clamp(1rem,2.5vw, 3rem) !important;
+    font-weight: 700 !important;
+}
+
+.author{
+    font-size: clamp(1rem,1.5vw, 2rem) !important;
+    font-weight: 700 !important;
 }

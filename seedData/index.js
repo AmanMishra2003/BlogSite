@@ -7,7 +7,10 @@ const seedingData = async()=>{
     await Blog.deleteMany({})
     for (let index = 0; index < 10; index++) {
        const newBlog = await new Blog({
-        image : "https://i.pinimg.com/474x/0c/79/8c/0c798c69559be4003494c25294e5b984.jpg",
+        image: {
+                path: "https://res.cloudinary.com/dw3uvmlbu/image/upload/v1721897972/BlogSiteCodeSoft/BlogImage/xj6gf90cewg0y78yuud5.jpg",
+                filename: "BlogSiteCodeSoft/BlogImage/xj6gf90cewg0y78yuud5",
+        },
         category :"story",
         title :"lorem ipsum title",
         blogDate : new Date(),

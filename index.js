@@ -1,4 +1,5 @@
 const ejsMate = require('ejs-mate')
+require('dotenv').config()
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const path = require('path')
@@ -14,7 +15,7 @@ app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended:true}))
 
 //mongodb connection 
-const DB_url = "mongodb://localhost:27017/blogSiteCodeSoft"
+const DB_url = process.env.DB_URL
 mongoose.connect(DB_url).then(()=>{
     console.log("Connection Made!!")
 })

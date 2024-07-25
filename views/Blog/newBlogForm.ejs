@@ -1,11 +1,16 @@
 <%- layout('./layout/boilerplate.ejs') %>
 <main class="container mt-5 w-50 border border-primary rounded px-4 py-4">
     <h1 class="mb-4">Create a Blog Post</h1>
-    <form action="/blog" method="post">
-        <div class="mb-3">
+    <form action="/blog" method="post" enctype="multipart/form-data">
+        <!-- <div class="mb-3">
             <label for="image" class="form-label">Image URL</label>
             <input type="text" class="form-control" id="image" name="image" placeholder="Enter image URL">
+        </div> -->
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" class="form-control" id="image" name="image">
         </div>
+        
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
             <select class="form-select" aria-label="Default select example" id="category" name="category">

@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const ImageSchema = Schema({
+    path: String,
+    filename: String
+})
+
 const BlogSchema = Schema({
-    image : {
-        type: String,
-    },
+    image : ImageSchema,
     category :{
         type: String
     },

@@ -6,14 +6,17 @@
                 <div class="blog-image mb-4 position-relative">
                     <!-- Blog Header -->
                     <div class="blog-header position-absolute bg-light-500">
-                        <p class="display-4 border-bottom border-black h1">
+                        <p class="display-4 border-bottom border-black h1 title">
                             <%= data.title %>
                         </p>
-                        <p class="lead m-0">by <a href="#">Author Name</a> | <%= formateDate(data.blogDate) %>
+                        <p class="lead m-0 author">by <a href="#">Author Name</a> | <%= formateDate(data.blogDate) %>
                         </p>
                     </div>
-                    <img src="https://i.pinimg.com/474x/0c/79/8c/0c798c69559be4003494c25294e5b984.jpg"
+                    <% if (data.image) { %>
+                        <img src="<%= data.image.path %>"
                         class="img-fluid w-100" alt="Blog Image" style="aspect-ratio: 3/1; object-fit: cover;">
+                    <% } %>
+                    
                 </div>
                 <!-- Blog Content -->
                 <div class="blog-content">

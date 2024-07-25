@@ -7,7 +7,9 @@
             <div class="col-12 col-md-4 gx-5 gy-3">
                 <div class="card w-100 position-relative" >
                     <span class="badge bg-light position-absolute px-3 py-2 fs-4 text-dark" style="top: 2%; left: 4%;"><%=ele.category%></span>
-                    <img src=<%= ele.image%> class="card-img-top blog-image-dimension" alt="...">
+                    <% if (ele.image) { %>
+                        <img src=<%= ele.image.path%> class="card-img-top blog-image-dimension" alt="...">
+                    <% } %>
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-cente my-3">
                             <h5 class="card-title"><%= ele.title%></h5>
