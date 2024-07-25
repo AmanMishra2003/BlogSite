@@ -24,7 +24,7 @@
                     <!-- Add more paragraphs as needed -->
                 </div>
                 <!-- Comments Section -->
-                <div class="comments-section mt-2">
+                <div class="comments-section mt-2 border-top border-primary mt-4 pt-3">
                     <h3>Comments</h3>
                     <form class="mb-4" action="/blog/<%=data.id%>/comment" method="post">
                         <textarea class="form-control" rows="3" placeholder="Add a comment..."
@@ -40,8 +40,7 @@
                                     <%= ele.content %>
                                 </p>
                                 <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">
-                                    <a href="#" class=" btn text-secondary text-decoration-none">Edit</a> | <form
-                                        action="#"><button class=" btn text-secondary">Delete</button></form> | <button
+                                    <form action="/blog/<%= data.id %>/comment/<%= ele.id %>?_method=DELETE" method="post"><button class=" btn text-secondary">Delete</button></form> | <button
                                         type="button" class="btn text-secondary modelButton" data-bs-toggle="modal"  data-id="<%= ele.id %>"
                                         data-bs-target="#exampleModal">Reply</button>
                                 </div>
@@ -53,8 +52,7 @@
                                                 <%= reply.content %>
                                             </p>
                                             <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">
-                                                <a href="#" class=" btn text-secondary text-decoration-none">Edit</a> | <form
-                                                    action="#"><button class=" btn text-secondary">Delete</button></form> 
+                                                <form action="/blog/<%= data.id %>/comment/<%= ele.id %>/replies/<%=reply.id%>?_method=DELETE" method="post"><button class=" btn text-secondary">Delete</button></form> 
                                             </div>
                                         </div>
                                     <% }) %>

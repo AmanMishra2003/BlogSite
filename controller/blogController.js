@@ -1,7 +1,9 @@
 //models
 const Blog = require("../models/BlogModel")
 const date = require('date-and-time');
-const {cloudinary} = require('../cloudinary')
+const {cloudinary} = require('../cloudinary');
+const { options } = require("../routes/commentRouter");
+const asyncHandler = require('express-async-handler')
 
 function formateDate(d){
     return date.format(d, 'MMM DD YYYY')
@@ -9,17 +11,28 @@ function formateDate(d){
 
 // postBlogData, newBlogForm
 module.exports = {
-    showBlogPage : async(req,res)=>{
-        const allblogs = await Blog.find({})
+    showBlogPage : asyncHandler(async(req,res,next)=>{
+         let allblogs;
+        if(req.query.title){
+            allblogs = await Blog.find({title: {$regex : req.query.title, $options : 'i'}})
+        }else{
+            allblogs = await Blog.find({})
+        }
         res.render('Blog/blogPage',{allblogs, formateDate})
-    },
-    showUserPost : (req,res)=>{
-        res.render('Blog/userPost')
-    },
+    }),
+    showUserPost : asyncHandler(async(req,res,next)=>{
+        let blog;
+        if(req.query.title){
+            blog = await Blog.find({title: {$regex : req.query.title, $options : 'i'}})
+        }else{
+            blog = await Blog.find({})
+        }
+        res.render('Blog/userPost',{blog, formateDate})
+    }),
     newBlogForm : (req,res)=>{
         res.render('Blog/newBlogForm')
     },
-    postBlogData : async(req,res)=>{
+    postBlogData : asyncHandler(async(req,res,next)=>{
         const data = new Blog({...req.body, blogDate: new Date()})
         data.image = {
             path: req.file.path,
@@ -27,18 +40,18 @@ module.exports = {
         }
         await data.save()
         res.redirect(`/blog/${data.id}`)
-    },
-    showSingleBlog : async(req,res)=>{
+    }),
+    showSingleBlog :asyncHandler(async(req,res,next)=>{
         const {id} = req.params
         const data = await Blog.findById(id).populate({path:'comments',populate:{path:'replies'}})
         res.render('Blog/singleBlogPage',{data, formateDate})
-    },
-    editBlogForm :async(req,res)=>{
+    }),
+    editBlogForm :asyncHandler(async(req,res,next)=>{
         const {id} = req.params
         const data = await Blog.findById(id)
         res.render('Blog/Edit',{data})
-    },
-    editAndUpadteBlog : async(req,res)=>{
+    }),
+    editAndUpadteBlog :asyncHandler( async(req,res,next)=>{
         const {id} = req.params;
         const blogToBeEdited = await Blog.findById(id)
         const currentBlogImage = blogToBeEdited.image;
@@ -54,5 +67,10 @@ module.exports = {
         }
         await data.save();
         res.redirect(`/blog/${id}`)
-    }
+    }),
+    deleteblog :asyncHandler(async(req,res,next)=>{
+        const {id} = req.params;
+        await Blog.findByIdAndDelete(id)
+        res.redirect('/blog/userPost')
+    })
 }

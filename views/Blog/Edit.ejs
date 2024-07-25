@@ -1,15 +1,15 @@
 <%- layout('./layout/boilerplate.ejs') %>
-<main class="container mt-5 w-50 border border-primary rounded px-4 py-4">
+<main class="container mt-5 w-md-50 border border-primary rounded px-4 py-4">
     <h1 class="mb-4">Create a Blog Post</h1>
-    <form action="/blog/<%=data.id%>?_method=PATCH" method="post" enctype="multipart/form-data">
+    <form action="/blog/<%=data.id%>?_method=PATCH" method="post" enctype="multipart/form-data" class="needs-validation" id="blogForm" novalidate>
         <div class="mb-3">
             <label for="image" class="form-label">Upload Image</label>
             <input type="file" class="form-control" id="image" name="image">
         </div>
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
-            <select class="form-select" aria-label="Default select example" id="category" name="category">
-                <option>Open this select menu</option>
+            <select class="form-select" aria-label="Default select example" id="category" name="category" required>
+                <option selected disabled value="">Open this select menu</option>
                 <option value="story" <%= data.category === 'story' ? 'selected' : '' %>>Story</option>
                 <option value="technology" <%= data.category === 'technology' ? 'selected' : '' %>>Technology</option>
                 <option value="health" <%= data.category === 'health' ? 'selected' : '' %>>Health and Wellness</option>
@@ -25,11 +25,17 @@
         </div>
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="<%= data.title %>">
+            <input type="text" class="form-control is_valid" id="title" name="title" placeholder="Enter title" value="<%= data.title %>" required>
+            <div class="invalid-feedback">
+                Title is requried.
+            </div>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content </label>
-            <textarea class="form-control" id="content" name="content" rows="4" placeholder="Enter content"><%= data.content %></textarea>
+            <textarea class="form-control is_valid" id="content" name="content" rows="4" placeholder="Enter content" required><%= data.content %></textarea>
+            <div class="invalid-feedback">
+                Content is requried.
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Submit</button>

@@ -14,6 +14,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended:true}))
 
+app.use((req,res,next)=>{
+    res.locals.currentPath = req.path
+    next();
+})
+
 //mongodb connection 
 const DB_url = process.env.DB_URL
 mongoose.connect(DB_url).then(()=>{
@@ -26,10 +31,17 @@ const CommentRouter = require('./routes/commentRouter')
 const UserRouter = require("./routes/userRouter")
 
 
+
 //all routes written here
 app.use('/blog',BlogRouter)
 app.use('/blog/:id/comment',CommentRouter)
 app.use('/users',UserRouter)
+
+app.use((err,req,res,next)=>{
+    // res.send(err)
+    res.render('error',{err})
+    // console.log(err)
+})
 
 app.listen(3000,()=>{
     console.log("connection")

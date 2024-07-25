@@ -20,5 +20,16 @@ const commentSchema = Schema({
         ref: 'Comment'
       }]
 })
+commentSchema.post('findOneAndDelete',async(reply)=>{
+  if(reply){
+      await Comment.deleteMany({
+          _id :{
+              $in: reply.replies
+          }
+      })
+  }
+})
+const Comment = mongoose.model('Comment', commentSchema)
 
-module.exports = mongoose.model('Comment', commentSchema)
+
+module.exports = Comment
