@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-primary rounded-bottom p-0 px-md-5">
-    <div class="container  ">
+    <div class="container-fluid">
         <a class="navbar-brand d-flex justify-content-center align-items-center" href="/blog">
             <img src="/images/clockLogo.png" alt="Logo" width="60" height="60" class="d-inline-block align-text-top">
             <span class="text-white fs-3" style="transform: rotate(-10deg);">Timely</span>
@@ -8,24 +8,35 @@
           <span class="navbar-toggler-icon"></span>
         </button>
       <div class="collapse navbar-collapse pb-3 pb-md-0 " id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-md-center justify-content-md-center w-100">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-md-center justify-content-md-center ">
           <li class="nav-item">
-            <a class="nav-link <%= currentPath === '/blog' ? 'text-info fs-4 border-white border-bottom' : 'text-white fs-5' %>" aria-current="page" href="/blog">Home</a>
+            <a class="nav-link fs-5 <%= currentPath === '/blog' ? 'text-info  border-white border-bottom' : 'text-white ' %>" aria-current="page" href="/blog">Home</a>
+          </li>
+          <% if (currentUser) { %>
+            <li class="nav-item">
+              <a class="nav-link fs-5 <%= currentPath === '/blog/userPost' ?  'text-info  border-white border-bottom' : 'text-white'  %>" href="/blog/userPost">Post</a>
+            </li>
+          <% } %>
+          <li class="nav-item">
+            <a class="nav-link fs-5 <%= currentPath === '/blog/contact' ?  'text-info  border-white border-bottom' : 'text-white '  %>" href="#" >Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <%= currentPath === '/blog/userPost' ?  'text-info fs-4 border-white border-bottom' : 'text-white fs-5'  %>" href="/blog/userPost">Post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <%= currentPath === '/blog/contact' ?  'text-info fs-4 border-white border-bottom' : 'text-white fs-5'  %>" href="#" >Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link  <%= currentPath === '/blog/about' ?  'text-info fs-4 border-white border-bottom' : 'text-white fs-5'  %>" href="#" >About</a>
+            <a class="nav-link fs-5 <%= currentPath === '/blog/about' ?  'text-info  border-white border-bottom' : 'text-white '  %>" href="#" >About</a>
           </li>
         </ul>
-        <form class="<%= currentPath === '/blog'? 'd-flex' : 'invisible' %>" role="search">
+        <div class="d-md-flex align-items-md-center " style="gap: 10px;">
+
+          <% if (currentUser) { %>
+            <a href="/user/logout" class="btn btn-md btn-light text-secondary">Logout</a>
+            <% } else { %>
+              <a href="/user/login" class="btn btn-md btn-light text-secondary">Login</a>
+              <a href="/user/signup" class="btn btn-md btn-light text-secondary">Signup</a>
+          <% } %>
+        <form class="<%= currentPath === '/blog'? 'd-flex' : 'd-none' %>" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title" >
           <button class="btn btn-primary" type="submit">Search</button>
         </form>
+        </div>
       </div>
     </div>
   </nav>

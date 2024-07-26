@@ -30,8 +30,11 @@ const BlogSchema = Schema({
     comments :[{
         type: Schema.Types.ObjectId,
         ref:'Comment'
-    }]
-    // author 
+    }],
+    author :{
+        type: Schema.Types.ObjectId,
+        ref:'User'
+    }
 })
 
 BlogSchema.post('findOneAndDelete',async(blog)=>{

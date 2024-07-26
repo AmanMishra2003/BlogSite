@@ -9,7 +9,7 @@
                         <p class="display-4 border-bottom border-black h1 title">
                             <%= data.title %>
                         </p>
-                        <p class="lead m-0 author">by <a href="#">Author Name</a> | <%= formateDate(data.blogDate) %>
+                        <p class="lead m-0 author">by <a href="#"><%= data.author.username %></a> | <%= formateDate(data.blogDate) %>
                         </p>
                     </div>
                     <% if (data.image) { %>

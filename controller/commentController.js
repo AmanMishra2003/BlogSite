@@ -1,5 +1,6 @@
 const Comment = require('../models/CommentModel')
 const Blog = require('../models/BlogModel')
+const User = require('../models/UserModel')
 
 module.exports = {
    addComment : async(req, res)=>{

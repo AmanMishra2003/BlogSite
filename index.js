@@ -3,6 +3,10 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const path = require('path')
+const cookieParser = require('cookie-parser')
+const expressSession = require('express-session')
+const flash = require('connect-flash')
+const {checkUser} = require('./middleware')
 
 const express = require('express')
 const app = express();
@@ -13,9 +17,21 @@ app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+app.use(cookieParser())
 
+app.use(expressSession({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true }
+}))
+app.use(flash())
+
+app.use(checkUser)
 app.use((req,res,next)=>{
     res.locals.currentPath = req.path
+    res.locals.flasherrors = req.flash('error')
     next();
 })
 
@@ -33,9 +49,10 @@ const UserRouter = require("./routes/userRouter")
 
 
 //all routes written here
+
 app.use('/blog',BlogRouter)
 app.use('/blog/:id/comment',CommentRouter)
-app.use('/users',UserRouter)
+app.use('/user',UserRouter)
 
 app.use((err,req,res,next)=>{
     // res.send(err)

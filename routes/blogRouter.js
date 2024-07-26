@@ -1,6 +1,6 @@
 const {showBlogPage, showUserPost, postBlogData, newBlogForm, showSingleBlog, editBlogForm,editAndUpadteBlog, deleteblog} = require('../controller/blogController')
 const multer = require('multer')
-const {updateAndIncreaseView} = require('../middleware')
+const {updateAndIncreaseView,authorizeUser,checkUser} = require('../middleware')
 
 const express = require('express')
 const { storage } = require('../cloudinary')
@@ -9,23 +9,25 @@ const router = express.Router()
 //multer config
 const upload = multer({storage:storage})
 
+
+
 router.route('/')
     .get(showBlogPage)
-    .post(upload.single('image'),postBlogData)
+    .post(authorizeUser,upload.single('image'),postBlogData)
 
 router.route('/newBlog')
-    .get(newBlogForm)
+    .get(authorizeUser, newBlogForm)
 
 router.route('/userPost')
-    .get(showUserPost)
+    .get(authorizeUser,showUserPost)
 
 router.route('/:id')
     .get(updateAndIncreaseView,showSingleBlog)
-    .patch(upload.single('image'),editAndUpadteBlog)
-    .delete(deleteblog)
+    .patch(authorizeUser,upload.single('image'),editAndUpadteBlog)
+    .delete(authorizeUser,deleteblog)
 
 router.route('/:id/edit')
-    .get(editBlogForm)
+    .get(authorizeUser,editBlogForm)
 
 
 
