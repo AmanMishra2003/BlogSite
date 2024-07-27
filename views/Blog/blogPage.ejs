@@ -1,42 +1,117 @@
 <%- layout('./layout/boilerplate.ejs') %>
 
-<main class="container-md">
-    <div>
-    <div class="row">
-        <% allblogs.forEach(ele => { %>
-            <div class="col-12 col-md-6 col-lg-4 gx-5 gy-3">
-                <div class="card w-100 position-relative" >
-                    <span class="badge bg-light position-absolute px-3 py-2 fs-5 text-dark text-capitalize" style="top: 2%; left: 4%;"><%=ele.category%></span>
-                    <% if (ele.image) { %>
-                        <img src=<%= ele.image.path%> class="card-img-top blog-image-dimension" alt="...">
-                    <% } %>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-cente my-3">
-                            <h5 class="card-title text-capitalize"><%= ele.title%></h5>
-                            <p class="card-subTitle mute small" style="min-width: fit-content;"><%= formateDate(ele.blogDate)%></p>
+    <main class="container-fluid">
+        <div class="row position-relative">
+            <div class="col-12 col-md-8 col-lg-10 ">
+                <div class="row mx-2 mx-md-4 ">
+                    <% allblogs.forEach(ele=> { %>
+                        <div class="col-12  col-md-6 col-lg-4 gx-3 gy-3">
+                            <div class="card w-100 position-relative">
+                                <span class="badge bg-light position-absolute px-3 py-2 fs-6 text-dark text-capitalize"
+                                    style="top: 2%; left: 4%;">
+                                    <%=ele.category%>
+                                </span>
+                                <% if (ele.image) { %>
+                                    <img src=<%=ele.image.path%> class="card-img-top blog-image-dimension" alt="...">
+                                    <% } %>
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-cente mt-2">
+                                                <h5 class="card-title text-capitalize m-0">
+                                                    <%= ele.title%>
+                                                </h5>
+                                                <p class="card-subTitle mute small m-0 text-secondary" style="min-width: fit-content;">
+                                                    <%= formateDate(ele.blogDate)%>
+                                                </p>
+                                            </div>
+
+                                            <p class="card-text">
+                                            <div id="blog-<%= ele.id %>" class="blog-synopsis text-secondary"></div>
+                                            </p>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a href="/blog/<%=ele.id%>" class="btn btn-sm btn-primary">Read More</a>
+                                                <p class=" text-secondary my-0 small">Views: <%= ele.views %>
+                                                </p>
+                                            </div>
+                                        </div>
+                            </div>
                         </div>
-                      
-                      <p class="card-text text-justify "><div id="blog-<%= ele.id %>" class="blog-synopsis"></div></p>
-                      <div class="d-flex align-items-center justify-content-between">
-                          <a href="/blog/<%=ele.id%>" class="btn btn-primary">Read More</a>
-                          <p class=" text-secondary my-0">Views: <%= ele.views %></p>
-                      </div>
-                    </div>
+                        <% }) %>
+                </div>
+                
+            </div>
+            <div class="col-0 col-md-4 col-lg-2 bg-primary ps-4 position-sticky" style="top: 0;">
+                <div class="position-sticky py-3" style="top: 0; min-height: 100vh;">
+                    <p class="h5 text-white border-bottom">Categories</p>
+                      <ul class="list-unstyled">
+                        <li class="my-2">
+                            <a href="/blog?category=story" class="text-white text-decoration-none">
+                                <i class="bi bi-book"></i> Story
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=technology" class="text-white text-decoration-none">
+                                <i class="bi bi-laptop"></i> Technology
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=health" class="text-white text-decoration-none">
+                                <i class="bi bi-heart"></i> Health and Wellness
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=lifestyle" class="text-white text-decoration-none">
+                                <i class="bi bi-house-door"></i> Lifestyle
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=business" class="text-white text-decoration-none">
+                                <i class="bi bi-briefcase"></i> Business and Finance
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=education" class="text-white text-decoration-none">
+                                <i class="bi bi-book"></i> Education
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=entertainment" class="text-white text-decoration-none">
+                                <i class="bi bi-film"></i> Entertainment
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=food" class="text-white text-decoration-none">
+                                <i class="bi bi-cup-straw"></i> Food and Drink
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=travel" class="text-white text-decoration-none">
+                                <i class="bi bi-airplane-engines"></i> Travel
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=parenting" class="text-white text-decoration-none">
+                                <i class="bi bi-person-heart"></i> Parenting
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="/blog?category=diy" class="text-white text-decoration-none">
+                                <i class="bi bi-tools"></i> DIY and Crafts
+                            </a>
+                        </li>
+                </ul>
                 </div>
             </div>
-        <% }) %>
-        
-    </div>
-</div>
+        </div>
+    </main>
 
-</main>
-
-<script>
-    const allblogs = <%- JSON.stringify(allblogs)%>
-    allblogs.forEach(ele=>{
-        const blogDiv = document.querySelector(`#blog-${ele._id}`)
-        if (blogDiv){
-            blogDiv.innerHTML = ele.content
-        }
-    })
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const allblogs = <%- JSON.stringify(allblogs) %>
+                allblogs.forEach(ele => {
+                    const blogDiv = document.getElementById(`blog-${ele._id}`)
+                    if (blogDiv) {
+                        blogDiv.innerHTML = ele.content
+                    }
+                })
+        })
+    </script>

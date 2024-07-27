@@ -50,9 +50,15 @@ const UserRouter = require("./routes/userRouter")
 
 //all routes written here
 
+app.get('/',(req,res)=>{
+    res.render('home')
+})
+
 app.use('/blog',BlogRouter)
 app.use('/blog/:id/comment',CommentRouter)
 app.use('/user',UserRouter)
+
+
 
 app.use((err,req,res,next)=>{
     // res.send(err)

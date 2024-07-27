@@ -25,30 +25,37 @@
                 </div>
                 <!-- Comments Section -->
                 <div class="comments-section mt-2 border-top border-primary mt-4 pt-3">
-                    <h3>Comments</h3>
-                    <form class="mb-4" action="/blog/<%=data.id%>/comment" method="post">
-                        <textarea class="form-control" rows="3" placeholder="Add a comment..."
-                            name="content"></textarea>
-                        <button class="btn btn-primary mt-2">Submit</button>
-                    </form>
+                    <p class="fs-5 fs-3">Comments</p>
+                    <% if (currentUser) { %>
+                        <form class="mb-4" action="/blog/<%=data.id%>/comment" method="post">
+                            <textarea class="form-control" rows="3" placeholder="Add a comment..."
+                                name="content"></textarea>
+                            <button class="btn btn-sm btn-primary mt-2">Submit</button>
+                        </form>
+                    <% } %>
+                    
                     <!-- Example Comment -->
                     <div class="comment ">
                         <% data.comments.forEach(ele=> { %>
                             <div class="mb-4 border px-4 py-2 rounded">
                                 <p class="my-0">
-                                    <strong>Author : </strong>
+                                    <strong><%= ele.author.username %> : </strong>
                                     <%= ele.content %>
                                 </p>
                                 <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">
-                                    <form action="/blog/<%= data.id %>/comment/<%= ele.id %>?_method=DELETE" method="post"><button class=" btn text-secondary">Delete</button></form> | <button
-                                        type="button" class="btn text-secondary modelButton" data-bs-toggle="modal"  data-id="<%= ele.id %>"
-                                        data-bs-target="#exampleModal">Reply</button>
+                                    <form action="/blog/<%= data.id %>/comment/<%= ele.id %>?_method=DELETE" method="post"><button class=" btn text-secondary">Delete</button></form> 
+                                    <% if (currentUser) { %>
+                                        |
+                                        <button
+                                            type="button" class="btn text-secondary modelButton" data-bs-toggle="modal"  data-id="<%= ele.id %>"
+                                            data-bs-target="#exampleModal">Reply</button>
+                                    <% } %> 
                                 </div>
                                 <% if ((ele.replies.length)!==0) { %>
                                     <%ele.replies.forEach(reply => { %>
                                         <div class="ms-5 ">
                                             <p class="my-0">
-                                                <strong>Author : </strong>
+                                                <strong><%=reply.author.username %> : </strong>
                                                 <%= reply.content %>
                                             </p>
                                             <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">

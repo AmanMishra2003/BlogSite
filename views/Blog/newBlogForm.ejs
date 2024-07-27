@@ -1,14 +1,15 @@
 <%- layout('./layout/boilerplate.ejs') %>
-<main class="container-md mt-5 mx-auto  border border-primary rounded px-4 py-4">
-    <h1 class="mb-4">Create a Blog Post</h1>
-    <form action="/blog" method="post" enctype="multipart/form-data" id="blogForm" novalidate>
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload Image</label>
+<main class="container-md mt-3 mx-auto">
+    <div class="container form-container border rounded px-4 py-2" >
+        <h1 class="mb-2">Create a Blog Post</h1>
+    <form action="/blog" method="post" enctype="multipart/form-data" id="blogForm" class="needs-validation" novalidate>
+        <div class="mb-3 input-group-sm">
+            <label for="image" class="form-label fs-6 ">Upload Image</label>
             <input type="file" class="form-control" id="image" name="image" required>
             <div class="invalid-feedback">Image is required</div>
         </div>
         
-        <div class="mb-3">
+        <div class="mb-3 input-group-sm">
             <label for="category" class="form-label">Category</label>
             <select class="form-select" aria-label="Default select example" id="category" name="category" required>
                 <option value="">Open this select menu</option>
@@ -26,17 +27,20 @@
             </select>
             <div class="invalid-feedback">Select a category</div>
         </div>
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+        <div class="mb-3 input-group-sm">
+            <label for="title" class="form-label fs-6">Title</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required>
             <div class="invalid-feedback">Title is requried</div>
         </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">Content </label>
+        <div class="mb-3 input-group-sm">
+            <label for="content fs-6" class="form-label">Content </label>
             <textarea class="form-control" id="content" name="content" rows="4" placeholder="Enter content" required></textarea>
             <div class="invalid-feedback">Content is required</div>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
-</main>
+
+
+    </div>
+    </main>

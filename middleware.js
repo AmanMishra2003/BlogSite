@@ -1,4 +1,5 @@
 const Blog = require('./models/BlogModel')
+const Comment = require('./models/CommentModel')
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 
@@ -56,3 +57,38 @@ module.exports.authorizeUser = asyncHandler(async(req,res,next)=>{
     }
 })
 
+module.exports.blogAuthorizationCheck = asyncHandler(async(req,res,next)=>{
+    const {id} = req.params
+    const currentBlog = await Blog.findById(id);
+    const user = res.locals.currentUser._id
+    if(currentBlog.author.equals(user)){
+        next()
+    }else{
+        req.flash("error","You Do not have Permission .")
+        res.redirect(`/blog/${id}`)
+    }
+})
+
+module.exports.commentAuthorizationCheck = asyncHandler(async(req,res,next)=>{
+    const {id,commentId, replyId} = req.params;
+    const user = res.locals.currentUser._id
+    let comment ;
+    if(replyId){
+        comment = await Comment.findById(replyId)
+    }
+    else if(commentId){
+        comment = await Comment.findById(commentId)
+    }
+    
+    if (!comment) {
+        req.flash("error", "Comment not found.");
+        return res.redirect(`/blog/${id}`);
+    }
+
+    if (comment.author.equals(user)) {
+        return next();
+    } else {
+        req.flash("error", "You do not have permission.");
+        return res.redirect(`/blog/${id}`);
+    }
+})

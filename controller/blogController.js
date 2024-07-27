@@ -4,7 +4,8 @@ const User = require("../models/UserModel")
 const date = require('date-and-time');
 const {cloudinary} = require('../cloudinary');
 
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
+const { populate } = require("dotenv");
 
 
 
@@ -15,10 +16,13 @@ function formateDate(d){
 // postBlogData, newBlogForm
 module.exports = {
     showBlogPage : asyncHandler(async(req,res,next)=>{
-         let allblogs;
+        let allblogs;
         if(req.query.title){
             allblogs = await Blog.find({title: {$regex : req.query.title, $options : 'i'}})
-        }else{
+        }else if(req.query.category){
+            allblogs = await Blog.find({category: req.query.category})
+        }
+        else{
             allblogs = await Blog.find({})
         }
         res.render('Blog/blogPage',{allblogs, formateDate})
@@ -39,7 +43,7 @@ module.exports = {
     postBlogData : asyncHandler(async(req,res,next)=>{
         const currentUserId = res.locals.currentUser._id
         const user = await User.findById(currentUserId)
-        // console.log(user)
+
         const data = new Blog({...req.body, blogDate: new Date()})
         data.image = {
             path: req.file.path,
@@ -51,7 +55,18 @@ module.exports = {
     }),
     showSingleBlog :asyncHandler(async(req,res,next)=>{
         const {id} = req.params
-        const data = await Blog.findById(id).populate('author').populate({path:'comments',populate:{path:'replies'}})
+        const data = await Blog.findById(id).populate('author').populate({
+            path:'comments',
+            populate:[
+                {
+                    path:'replies',
+                    populate:{path:'author'}
+                },
+                {
+                    path:'author'
+                }
+            ]
+        })
         res.render('Blog/singleBlogPage',{data, formateDate})
     }),
     editBlogForm :asyncHandler(async(req,res,next)=>{

@@ -1,12 +1,13 @@
 <%- layout('./layout/boilerplate.ejs') %>
-<main class="container mt-5 w-md-50 border border-primary rounded px-4 py-4">
-    <h1 class="mb-4">Create a Blog Post</h1>
+<main class="container-md mt-3 mx-auto">
+    <div class="container form-container border rounded px-4 py-2" >
+    <h1 class="mb-2">Edit Blog Post</h1>
     <form action="/blog/<%=data.id%>?_method=PATCH" method="post" enctype="multipart/form-data" class="needs-validation" id="blogForm" novalidate>
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload Image</label>
+        <div class="mb-3 input-group-sm">
+            <label for="image" class="form-label fs-6">Upload Image</label>
             <input type="file" class="form-control" id="image" name="image">
         </div>
-        <div class="mb-3">
+        <div class="mb-3 input-group-sm">
             <label for="category" class="form-label">Category</label>
             <select class="form-select" aria-label="Default select example" id="category" name="category" required>
                 <option selected disabled value="">Open this select menu</option>
@@ -23,14 +24,14 @@
                 <option value="diy" <%= data.category === 'diy' ? 'selected' : '' %>>DIY and Crafts</option>
             </select>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 input-group-sm">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control is_valid" id="title" name="title" placeholder="Enter title" value="<%= data.title %>" required>
             <div class="invalid-feedback">
                 Title is requried.
             </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 input-group-sm">
             <label for="content" class="form-label">Content </label>
             <textarea class="form-control is_valid" id="content" name="content" rows="4" placeholder="Enter content" required><%= data.content %></textarea>
             <div class="invalid-feedback">
@@ -40,4 +41,5 @@
 
         <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
+    </div>
 </main>
