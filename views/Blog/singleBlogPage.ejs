@@ -43,11 +43,13 @@
                                     <%= ele.content %>
                                 </p>
                                 <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">
-                                    <form action="/blog/<%= data.id %>/comment/<%= ele.id %>?_method=DELETE" method="post"><button class=" btn text-secondary">Delete</button></form> 
-                                    <% if (currentUser) { %>
-                                        |
+                                    <% if (currentUser ) { %>
+                                        <% if (currentUser && currentUser._id.equals(ele.id)) { %>
+                                            <form action="/blog/<%= data.id %>/comment/<%= ele.id %>?_method=DELETE" method="post"><button class=" btn btn-sm text-secondary">Delete</button></form> 
+                                            |
+                                        <% } %>
                                         <button
-                                            type="button" class="btn text-secondary modelButton" data-bs-toggle="modal"  data-id="<%= ele.id %>"
+                                            type="button" class=" btn btn-sm text-secondary modelButton " data-bs-toggle="modal"  data-id="<%= ele.id %>"
                                             data-bs-target="#exampleModal">Reply</button>
                                     <% } %> 
                                 </div>
@@ -58,9 +60,11 @@
                                                 <strong><%=reply.author.username %> : </strong>
                                                 <%= reply.content %>
                                             </p>
+                                            <% if (currentUser && currentUser._id.equals(reply.author.id)) { %>
                                             <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">
-                                                <form action="/blog/<%= data.id %>/comment/<%= ele.id %>/replies/<%=reply.id%>?_method=DELETE" method="post"><button class=" btn text-secondary">Delete</button></form> 
+                                                <form action="/blog/<%= data.id %>/comment/<%= ele.id %>/replies/<%=reply.id%>?_method=DELETE" method="post"><button class=" btn btn-sm text-secondary">Delete</button></form> 
                                             </div>
+                                            <% } %>
                                         </div>
                                     <% }) %>
                                 <% } %>

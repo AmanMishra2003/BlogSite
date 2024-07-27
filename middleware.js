@@ -10,7 +10,7 @@ module.exports.checkUser = asyncHandler(async(req,res,next)=>{
     const token  = req.cookies.jwt;
 
     if(token){
-        jwt.verify(token, 'thisisasecret', async(err,decodedToken)=>{
+        jwt.verify(token, process.env.JWTSECRET , async(err,decodedToken)=>{
             if(err){
                 res.locals.currentUser = null;
                 next();
@@ -43,7 +43,7 @@ module.exports.authorizeUser = asyncHandler(async(req,res,next)=>{
 
     //check jwt token exist and verify
     if(token){
-         jwt.verify(token, 'thisisasecret',(err,decodedToken)=>{
+         jwt.verify(token, process.env.JWTSECRET,(err,decodedToken)=>{
             if(err){
                 req.flash('error','Login Required!!')
                 res.redirect('/user/login')
