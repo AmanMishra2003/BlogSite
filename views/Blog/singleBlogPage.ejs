@@ -39,12 +39,12 @@
                         <% data.comments.forEach(ele=> { %>
                             <div class="mb-4 border px-4 py-2 rounded">
                                 <p class="my-0">
-                                    <strong><%= ele.author.username %> : </strong>
-                                    <%= ele.content %>
+                                    <p class="small m-0"><%=ele.author.username %> : </p>
+                                    <p class="ms-4 fw-bold mb-0"><%= ele.content %></p>
                                 </p>
                                 <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">
                                     <% if (currentUser ) { %>
-                                        <% if (currentUser && currentUser._id.equals(ele.id)) { %>
+                                        <% if (currentUser && ele.author._id.equals(currentUser._id)) { %>
                                             <form action="/blog/<%= data.id %>/comment/<%= ele.id %>?_method=DELETE" method="post"><button class=" btn btn-sm text-secondary">Delete</button></form> 
                                             |
                                         <% } %>
@@ -53,12 +53,14 @@
                                             data-bs-target="#exampleModal">Reply</button>
                                     <% } %> 
                                 </div>
+                                
                                 <% if ((ele.replies.length)!==0) { %>
+                                    <p class="mute small m-0 ms-5">Replies</p>
                                     <%ele.replies.forEach(reply => { %>
-                                        <div class="ms-5 ">
+                                        <div class="ms-5  bg-secondary-subtle py-1 px-2 my-1 rounded">
                                             <p class="my-0">
-                                                <strong><%=reply.author.username %> : </strong>
-                                                <%= reply.content %>
+                                                <p class="small m-0"><%=reply.author.username %> : </p>
+                                                <p class="ms-4 fw-bold mb-0"><%= reply.content %></p>
                                             </p>
                                             <% if (currentUser && currentUser._id.equals(reply.author.id)) { %>
                                             <div class="d-flex justify-content-start align-items-center " style="gap: 20px;">

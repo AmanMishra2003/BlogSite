@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const maxAge = 3 * 24 * 60 * 60
 const genJWT = (id)=>{
-    return jwt.sign({id},'thisisasecret',{
+    return jwt.sign({id},process.env.JWTSECRET,{
         expiresIn : maxAge, //jwt take age in seconds and cookie take age in milliseconds
     });
 }
@@ -33,6 +33,6 @@ module.exports = {
     }),
     logout : (req,res)=>{
         res.cookie('jwt','',{maxAge:1})
-        res.redirect('/blog')
+        res.redirect('/')
     }
 }
