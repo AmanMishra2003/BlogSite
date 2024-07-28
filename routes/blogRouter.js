@@ -9,25 +9,28 @@ const router = express.Router()
 //multer config
 const upload = multer({storage:storage})
 
+//validation
+const {BlogValidation} = require('../Joi/validation')
+
 
 
 router.route('/')
     .get(showBlogPage)
-    .post(authorizeUser,upload.single('image'),postBlogData)
+    .post(authorizeUser,upload.single('image'),BlogValidation,postBlogData)
 
 router.route('/newBlog')
-    .get(authorizeUser, newBlogForm)
+    .get(authorizeUser,newBlogForm)
 
 router.route('/userPost')
     .get(authorizeUser,showUserPost)
-
+    
 router.route('/:id')
     .get(updateAndIncreaseView,showSingleBlog)
-    .patch(authorizeUser,blogAuthorizationCheck,upload.single('image'),editAndUpadteBlog)
+    .patch(authorizeUser,blogAuthorizationCheck,upload.single('image'),BlogValidation,editAndUpadteBlog)
     .delete(authorizeUser,blogAuthorizationCheck,deleteblog)
 
 router.route('/:id/edit')
-    .get(authorizeUser,blogAuthorizationCheck,editBlogForm)
+    .get(blogAuthorizationCheck,editBlogForm)
 
 
 

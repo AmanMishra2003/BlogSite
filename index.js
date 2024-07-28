@@ -61,9 +61,7 @@ app.use('/user',UserRouter)
 
 
 app.use((err,req,res,next)=>{
-    // res.send(err)
-    res.render('error',{err})
-    // console.log(err)
+   res.render('error',{err})
 })
 
 app.listen(3000,()=>{

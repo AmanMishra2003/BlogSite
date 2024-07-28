@@ -1,6 +1,5 @@
 <%- layout('./layout/boilerplate.ejs') %>
 <style>
-
     .login-form {
         width: 100%;
         max-width: 500px;
@@ -17,15 +16,17 @@
 
 
 <div class="login-form container-md px-4 py-5">
-    <form action="/user/login" method="post" class="needs-validation" novalidate>
+    <form class="LoginForm" >
         <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
+            <input type="email" class="form-control" id="floatingInput" autocomplete="email" placeholder="name@example.com" name="email" >
             <label for="floatingInput">Email address</label>
+            <p class="emailError text-danger text-capitalize small ms-2"></p>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"required>
+            <input type="password" class="form-control" id="floatingPassword" autocomplete="password" placeholder="Password" name="password">
             <label for="floatingPassword">Password</label>
+            <p class="passwordError text-danger text-capitalize small ms-2"></p>
         </div>
 
         <button class="btn btn-primary w-100" type="submit">LogIn</button>
@@ -36,3 +37,44 @@
 </div>
 
 </div>
+
+<script>
+    const form = document.querySelector('.LoginForm')
+
+    //error handler
+    const emailError = document.querySelector('.emailError')
+    const passwordError = document.querySelector('.passwordError')
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        //reset
+        emailError.textContent = ''
+        passwordError.textContent = ''
+
+        const email = form.email.value;
+        const password = form.password.value;
+
+        try {
+            const res = await fetch('/user/login', {
+                method: 'POST',
+                body: JSON.stringify({email, password }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const result = await res.json()
+
+            if (result.error) {
+                emailError.textContent = result.error.email
+                passwordError.textContent = result.error.password
+            }
+
+            if(result.user){
+                location.assign('/blog')
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    })
+</script>

@@ -1,5 +1,6 @@
 const mongoose  = require('mongoose')
 const bcrypt = require('bcrypt')
+const {isEmail} = require('validator')
 const Schema = mongoose.Schema
 
 const UserSchema = Schema({
@@ -7,6 +8,7 @@ const UserSchema = Schema({
         type:String,
         required:[true ,'username is required'],
         unique: true,
+        index: true 
     },
     firstname:{
         type:String,
@@ -20,7 +22,9 @@ const UserSchema = Schema({
         type:String,
         required:[true ,'email is required'],
         unique: true,
-        lowercase:true
+        index: true, 
+        lowercase:true,
+        validate: [isEmail, 'Please enter a valid email']
     },
     password :{
         type:String,
@@ -37,7 +41,9 @@ UserSchema.pre('save',async function(next){
 
 //static method
 UserSchema.statics.login= async function(email, password){
-
+    if(!(email && password)){
+        throw Error('Credentials are required!')
+    }
     const user = await this.findOne({email})
     if(user){
         const compareBool = await bcrypt.compare(password, user.password)

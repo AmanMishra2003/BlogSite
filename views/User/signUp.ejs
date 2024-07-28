@@ -1,49 +1,111 @@
 <%- layout('./layout/boilerplate.ejs') %>
-<style>
+    <style>
+        .login-form {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    .login-form {
-        width: 100%;
-        max-width: 500px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-container-1{
-        min-height: 80vh;
-    }
-</style>
-<div class="container form-container-1 mt-5 d-flex justify-content-center align-items-center">
+        .form-container-1 {
+            min-height: 80vh;
+        }
+    </style>
+    <div class="container form-container-1 mt-5 d-flex justify-content-center align-items-center">
 
 
-<div class="login-form container-md px-4 py-5">
-    <form action="/user/signup" method="post" class="needs-validation" novalidate>
-        <h1 class="h3 mb-3 fw-normal text-center">Sign Up</h1>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingUsername" placeholder="Username" name="username" required>
-            <label for="floatingUsername">Username</label>
+        <div class="login-form container-md px-4 py-5">
+            <form class="signupForm">
+                <h1 class="h3 mb-3 fw-normal text-center">Sign Up</h1>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingUsername" autocomplete="username"
+                        placeholder="Username" name="username">
+                    <label for="floatingUsername">Username</label>
+                    <p class="usernameError text-danger text-capitalize small ms-2 "></p>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name"
+                        name="firstname">
+                    <label for="floatingFirstName">First Name</label>
+                    <p class="firstnameError text-danger text-capitalize small ms-2"></p>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingLastName" placeholder="Last Name"
+                        name="lastname">
+                    <label for="floatingLastName">Last Name</label>
+                    <p class="lastnameError text-danger text-capitalize small ms-2"></p>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com"
+                        name="email">
+                    <label for="floatingEmail">Email address</label>
+                    <p class="emailError text-danger text-capitalize small ms-2"></p>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="floatingPassword" autocomplete="current-password"
+                        placeholder="Password" name="password">
+                    <label for="floatingPassword">Password</label>
+                    <p class="passwordError text-danger text-capitalize small ms-2"></p>
+                </div>
+                <button class="btn btn-primary w-100" type="submit">Sign Up</button>
+                <div class="w-100 text-center mt-3">
+                    <a href="/user/login" class="text-decoration-none text-secondary">Already a user?</a>
+                </div>
+            </form>
         </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name" name="firstname" required>
-            <label for="floatingFirstName">First Name</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingLastName" placeholder="Last Name" name="lastname" required>
-            <label for="floatingLastName">Last Name</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" name="email" required>
-            <label for="floatingEmail">Email address</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
-            <label for="floatingPassword">Password</label>
-        </div>
-        <button class="btn btn-primary w-100" type="submit">Sign Up</button>
-        <div class="w-100 text-center mt-3">
-            <a href="/user/login" class="text-decoration-none text-secondary">Already a user?</a>
-        </div>
-    </form>
-</div>
 
-</div>
+    </div>
+    <script>
+        const form = document.querySelector('.signupForm')
+
+        //error handler
+        const usernameError = document.querySelector('.usernameError')
+        console.log(usernameError)
+        const firstnameError = document.querySelector('.firstnameError')
+        const lastnameError = document.querySelector('.lastnameError')
+        const emailError = document.querySelector('.emailError')
+        const passwordError = document.querySelector('.passwordError')
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            //reset
+            usernameError.textContent = ''
+            firstnameError.textContent = ''
+            lastnameError.textContent = ''
+            emailError.textContent = ''
+            passwordError.textContent = ''
+
+            const username = form.username.value;
+            const firstname = form.firstname.value;
+            const lastname = form.lastname.value;
+            const email = form.email.value;
+            const password = form.password.value;
+
+            try {
+                const res = await fetch('/user/signup', {
+                    method: 'POST',
+                    body: JSON.stringify({ username, firstname, lastname, email, password }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const result = await res.json()
+
+                if (result.error) {
+                    usernameError.textContent = result.error.username
+                    firstnameError.textContent = result.error.firstname
+                    lastnameError.textContent = result.error.lastname
+                    emailError.textContent = result.error.email
+                    passwordError.textContent = result.error.password
+                }
+
+                if(result.user){
+                    location.assign('/blog')
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        })
+    </script>

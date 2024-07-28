@@ -2,14 +2,16 @@ const {addComment,addCommentReply, deletComment,deleteReply} = require('../contr
 const express = require('express')
 const router = express.Router({mergeParams:true})
 const {authorizeUser,commentAuthorizationCheck} = require('../middleware')
+const {CommentValidation} = require('../Joi/validation')
+
 
 router.route('/')
-    .post(authorizeUser,addComment)
+    .post(authorizeUser,CommentValidation,addComment)
 router.route('/:commentId')
     .delete(authorizeUser,commentAuthorizationCheck,deletComment)
 
 router.route('/:commentId/replies')
-    .post(authorizeUser, addCommentReply)
+    .post(authorizeUser,CommentValidation, addCommentReply)
 
 router.route('/:commentId/replies/:replyId')
     .delete(authorizeUser,commentAuthorizationCheck,deleteReply)

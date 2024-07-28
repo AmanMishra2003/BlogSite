@@ -5,9 +5,6 @@ const date = require('date-and-time');
 const {cloudinary} = require('../cloudinary');
 
 const asyncHandler = require('express-async-handler');
-const { populate } = require("dotenv");
-
-
 
 function formateDate(d){
     return date.format(d, 'MMM DD YYYY')

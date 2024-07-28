@@ -9,7 +9,9 @@
                         <p class="display-4 border-bottom border-black h1 title">
                             <%= data.title %>
                         </p>
-                        <p class="lead m-0 author">by <a href="#"><%= data.author.username %></a> | <%= formateDate(data.blogDate) %>
+                        <% //if (data.author) { %>
+                            <p class="lead m-0 author">by <a href="#"><%= data.author.username %></a> | <%= formateDate(data.blogDate) %>
+                        <% //} %>
                         </p>
                     </div>
                     <% if (data.image) { %>
@@ -24,9 +26,9 @@
                     <!-- Add more paragraphs as needed -->
                 </div>
                 <!-- Comments Section -->
+                <% if (currentUser) { %>
                 <div class="comments-section mt-2 border-top border-primary mt-4 pt-3">
                     <p class="fs-5 fs-3">Comments</p>
-                    <% if (currentUser) { %>
                         <form class="mb-4" action="/blog/<%=data.id%>/comment" method="post">
                             <textarea class="form-control" rows="3" placeholder="Add a comment..."
                                 name="content"></textarea>
@@ -35,6 +37,7 @@
                     <% } %>
                     
                     <!-- Example Comment -->
+                     
                     <div class="comment ">
                         <% data.comments.forEach(ele=> { %>
                             <div class="mb-4 border px-4 py-2 rounded">
