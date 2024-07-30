@@ -6,7 +6,7 @@
     <title>Bootstrap demo</title>
     <link rel="stylesheet" href="/stylesheet/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.tiny.cloud/1/z01djexufe1jr0k00jmc8dh1fszhgquk5cvqh411p4dntha3/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/<%= process.env.EDITORKEY%>/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
       tinymce.init({
         selector: '#content',
@@ -30,5 +30,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <script src="/javascript/formValidation.js"></script>
     <script src="/javascript/tinymcevalidation.js"></script>
+   
   </body>
 </html>

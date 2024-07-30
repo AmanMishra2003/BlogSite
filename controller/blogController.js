@@ -10,6 +10,8 @@ function formateDate(d){
     return date.format(d, 'MMM DD YYYY')
 }
 
+
+
 // postBlogData, newBlogForm
 module.exports = {
     showBlogPage : asyncHandler(async(req,res,next)=>{
