@@ -7,9 +7,16 @@ const cookieParser = require('cookie-parser')
 const expressSession = require('express-session')
 const flash = require('connect-flash')
 const {checkUser} = require('./middleware')
+const MongoStore = require('connect-mongo')
 
 const express = require('express')
 const app = express();
+
+//mongodb connection 
+const DB_url = process.env.DB_URL || 'mongodb://localhost:27017/blogSiteCodeSoft'
+mongoose.connect(DB_url).then(()=>{
+    console.log("Connection Made!!")
+}).catch((err)=>{console.log(err)})
 
 //all settings
 app.engine('ejs', ejsMate)
@@ -24,6 +31,10 @@ app.use(expressSession({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
+    store : MongoStore.create({
+        mongoUrl:DB_url,
+        touchAfter: 24 * 3600
+    })
     // cookie: { secure: true }
 }))
 app.use(flash())
@@ -35,11 +46,7 @@ app.use((req,res,next)=>{
     next();
 })
 
-//mongodb connection 
-const DB_url = process.env.DB_URL || 'mongodb://localhost:27017/blogSiteCodeSoft'
-mongoose.connect(DB_url).then(()=>{
-    console.log("Connection Made!!")
-}).catch((err)=>{console.log(err)})
+
 
 //routers
 const BlogRouter = require('./routes/blogRouter')
