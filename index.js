@@ -36,10 +36,10 @@ app.use((req,res,next)=>{
 })
 
 //mongodb connection 
-const DB_url = process.env.DB_URL
+const DB_url = process.env.DB_URL || 'mongodb://localhost:27017/blogSiteCodeSoft'
 mongoose.connect(DB_url).then(()=>{
     console.log("Connection Made!!")
-})
+}).catch((err)=>{console.log(err)})
 
 //routers
 const BlogRouter = require('./routes/blogRouter')

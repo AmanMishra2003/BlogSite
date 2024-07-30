@@ -10,7 +10,7 @@ const genJWT = (id)=>{
 }
 
 const handleError = (err)=>{
-    console.log(err.message)
+    console.log(err)
     let error = {
         username:'',
         firstname:'',

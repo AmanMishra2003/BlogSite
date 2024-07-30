@@ -45,6 +45,7 @@ UserSchema.statics.login= async function(email, password){
         throw Error('Credentials are required!')
     }
     const user = await this.findOne({email})
+    console.log(user)
     if(user){
         const compareBool = await bcrypt.compare(password, user.password)
         if(compareBool){
